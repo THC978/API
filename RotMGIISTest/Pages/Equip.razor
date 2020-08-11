@@ -1,0 +1,178 @@
+@page "/Equips"
+@inject HttpClient httpClient
+@using EquipsLibrary
+
+<h1>Equips</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+
+@if (equipment != null && mode == MODE.Add) // Insert form
+{
+    <EditForm Model="@equip" OnValidSubmit="@HandleAdd">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <InputText placeholder="Item Name" id="itemName" @bind-Value="@equip.EquipName" />
+        <br />
+        <InputText placeholder="Item Count" id="itemCount" @bind-Value="@equip.EquipCount" />
+        <br />
+        <InputText placeholder="Item Type" id="itemType" @bind-Value="@equip.EquipType" />
+        <br />
+        <button type="submit">Submit</button>
+        <br />
+    </EditForm>
+
+    @code {
+        public string imgsrc = "";
+        private Equips equip = new Equips();
+
+        private async void HandleAdd()
+        {
+            string endpoint = $"{baseUrl}api/Equips";
+
+            equip.EquipsId = Guid.NewGuid().ToString();
+
+
+            await httpClient.SendJsonAsync(HttpMethod.Post, endpoint, equip);
+
+            await load();
+        }
+    }
+}
+
+@if (equipment != null && mode == MODE.Edit) // Update
+{
+    <EditForm Model="@equip" OnValidSubmit="@HandleUpdate">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <InputText placeholder="Item Name" id="itemName" @bind-Value="@equip.EquipName" />
+        <br />
+        <InputText placeholder="Item Count" id="itemCount" @bind-Value="@equip.EquipCount" />
+        <br />
+        <InputText placeholder="Item Type" id="itemType" @bind-Value="@equip.EquipType" />
+        <br />
+        <button type="submit" class="btn btn-success">Update</button>
+        <br />
+
+        @code {
+            private async void HandleUpdate()
+            {
+                string endpoint = $"{baseUrl}api/Equips/{equip.EquipsId}";
+
+                await httpClient.SendJsonAsync(HttpMethod.Put, endpoint, equip);
+
+                await load();
+                mode = MODE.None;
+            }
+        }
+    </EditForm>
+}
+
+@if (equipment != null && mode == MODE.Delete) // Delete form
+{
+    <EditForm Model="@equip" OnValidSubmit="@HandleDelete">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <InputText placeholder="Item Name" id="itemName" @bind-Value="@equip.EquipName" />
+        <br />
+        <InputText placeholder="Item Count" id="itemCount" @bind-Value="@equip.EquipCount" />
+        <br />
+        <InputText placeholder="Item Type" id="itemType" @bind-Value="@equip.EquipType" />
+        <br />
+        <button type="submit" value="Delete" class="btn btn-danger">Delete</button>
+        <br />
+
+        @code {
+            protected async void HandleDelete()
+            {
+                string endpoint = $"{baseUrl}api/Equips/{equip.EquipsId}";
+                await httpClient.SendJsonAsync(HttpMethod.Delete, endpoint, null);
+                await load();
+                mode = MODE.None;
+            }
+        }
+    </EditForm>
+}
+
+
+@if (equipment == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th><SfButton IsPrimary="true" @onclick="@Add">Add</SfButton></th>
+                <th>Name</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in equipment)
+            {
+                <tr>
+                    <td width="50px"><img src="/Images/@(item.EquipType)/@(item.EquipName).png" height="50" width="50" /></td>
+                    <td width="150px">@item.EquipName</td>
+                    <td width="70px">@item.EquipCount</td>
+                    <td width="50px"><SfButton @onclick="@(() => ShowEdit(item.EquipsId))">Edit</SfButton></td>
+                    <td><a class="btn btn-danger btn-sm" @onclick="@(() => ShowDelete(item.EquipsId))">del</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@functions {
+    Equips[] equipment;
+
+    string baseUrl = "http://localhost:53151/";
+
+    private enum MODE { None, Add, Edit, Delete };
+    MODE mode = MODE.None;
+    Equips s;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await load();
+    }
+
+    protected async Task load()
+    {
+        equipment = await httpClient.GetJsonAsync<Equips[]>($"{baseUrl}api/Equips");
+        imgsrc = "/sample-data" + equip.EquipType + equip.EquipName + ".png";
+        StateHasChanged();
+    }
+
+    protected void Add()
+    {
+        mode = MODE.Add;
+    }
+
+
+    protected async Task ShowEdit(string id)
+    {
+        s = await httpClient.GetJsonAsync<Equips>($"{baseUrl}api/Equips/{id}");
+        equip.EquipsId = s.EquipsId;
+        equip.EquipName = s.EquipName;
+        equip.EquipCount = s.EquipCount;
+        equip.EquipType = s.EquipType;
+        mode = MODE.Edit;
+    }
+
+    protected async Task ShowDelete(string id)
+    {
+        s = await httpClient.GetJsonAsync<Equips>($"{baseUrl}api/Equips/{id}");
+        equip.EquipsId = s.EquipsId;
+        equip.EquipName = s.EquipName;
+        equip.EquipCount = s.EquipCount;
+        equip.EquipType = s.EquipType;
+        mode = MODE.Delete;
+    }
+
+}

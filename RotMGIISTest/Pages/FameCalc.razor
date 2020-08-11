@@ -1,0 +1,284 @@
+@page "/FameCalc"
+@using Newtonsoft.Json
+
+<h1>Counter</h1>
+
+
+<table class="table">
+    <tbody>
+        <tr>
+            <td> <SfNumericTextBox Width="130px" Format="n0" TValue="double?" @bind-Value="BaseFame"></SfNumericTextBox> </td>
+        </tr>
+        <tr>
+            <td width="50px"><SfCheckBox @bind-Checked="@Accurate" Label="Accurate"></SfCheckBox></td>
+            <td><SfCheckBox @bind-Checked="@Sharpshooter" Label="Sharpshooter"></SfCheckBox></td>
+        </tr>
+        <tr>
+            <td><SfCheckBox @bind-Checked="@Sniper" Label="Sniper"></SfCheckBox></td>
+            <td><SfCheckBox @bind-Checked="@Mundane" Label="Mundane"></SfCheckBox></td>
+        </tr>
+        <tr>
+            <td><SfCheckBox @bind-Checked="@EnemyOfTheGods" Label="EnemyOfTheGods"></SfCheckBox></td>
+            <td><SfCheckBox @bind-Checked="@SlayerOfTheGods" Label="SlayerOfTheGods"></SfCheckBox></td>
+        </tr>
+        <tr>
+            <td><SfCheckBox @bind-Checked="@Explorer" Label="Explorer"></SfCheckBox></td>
+            <td><SfCheckBox @bind-Checked="@Cartographer" Label="Cartographer"></SfCheckBox></td>
+        </tr>
+        <tr>
+            <td><SfCheckBox @bind-Checked="@TeamPlayer" Label="TeamPlayer"></SfCheckBox></td>
+            <td><SfCheckBox @bind-Checked="@LeaderOfMen" Label="LeaderOfMen"></SfCheckBox></td>
+        </tr>
+        <tr>
+            <td><SfCheckBox @bind-Checked="@DoerOfDeeds" Label="DoerOfDeeds"></SfCheckBox></td>
+            <td><SfCheckBox @bind-Checked="@FriendOfTheCubes" Label="FriendOfTheCubes"></SfCheckBox></td>
+        </tr>
+        <tr>
+            <td><SfCheckBox @bind-Checked="@FirstBorn" Label="FirstBorn"></SfCheckBox></td>
+            <td><SfCheckBox @bind-Checked="@TunnelRat" Label="TunnelRat"></SfCheckBox></td>
+        </tr>
+        <tr>
+            <td><SfCheckBox @bind-Checked="@Thirsty" Label="Thirsty"></SfCheckBox></td>
+        </tr>
+        <tr>
+            <td><SfNumericTextBox Width="80px" Min="0" Max="8" Format="n0" TValue="double?" @bind-Value="Bonus1"></SfNumericTextBox> </td>
+            <td><SfNumericTextBox Width="80px" Min="0" Max="8" Format="n0" TValue="double?" @bind-Value="Bonus2"></SfNumericTextBox> </td>
+        </tr>
+        <tr>
+            <td><SfNumericTextBox Width="80px" Min="0" Max="8" Format="n0" TValue="double?" @bind-Value="Bonus3"></SfNumericTextBox> </td>
+            <td><SfNumericTextBox Width="80px" Min="0" Max="8" Format="n0" TValue="double?" @bind-Value="Bonus4"></SfNumericTextBox> </td>
+        </tr>
+        <tr>
+            <SfButton IsPrimary="true" Content="@Content" @onclick="GetBonuses"></SfButton>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Your total fame is: @TotalFame</h2>
+
+
+@code {
+
+    public double? BaseFame { get; set; } = 0;
+    public double? BaseFame2 { get; set; } = 0;
+    public double? TotalFame { get; set; } = 0;
+    public double? Bonus1 { get; set; } = 0;
+    public double? Bonus2 { get; set; } = 0;
+    public double? Bonus3 { get; set; } = 0;
+    public double? Bonus4 { get; set; } = 0;
+    public double? Bonus1Div { get; set; } = 0;
+    public double? Bonus1Div1 { get; set; } = 0;
+    public double? Bonus2Div { get; set; } = 0;
+    public double? Bonus2Div1 { get; set; } = 0;
+    public double? Bonus3Div { get; set; } = 0;
+    public double? Bonus3Div1 { get; set; } = 0;
+    public double? Bonus4Div { get; set; } = 0;
+    public double? Bonus4Div1 { get; set; } = 0;
+    public bool Accurate { get; set; } = false;
+    public bool Sharpshooter { get; set; } = false;
+    public bool Sniper { get; set; } = false;
+    public bool Explorer { get; set; } = false;
+    public bool Cartographer { get; set; } = false;
+    public bool TeamPlayer { get; set; } = false;
+    public bool LeaderOfMen { get; set; } = false;
+    public bool DoerOfDeeds { get; set; } = false;
+    public bool FriendOfTheCubes { get; set; } = false;
+    public bool FirstBorn { get; set; } = false;
+    public bool Mundane { get; set; } = false;
+    public bool EnemyOfTheGods { get; set; } = false;
+    public bool Thirsty { get; set; } = false;
+    public bool BootsOnTheGround { get; set; } = false;
+    public bool TunnelRat { get; set; } = false;
+    public bool OryxSlayer { get; set; } = false;
+    public double? EnemyOfTheGodsBonus { get; set; } = 0;
+    public bool SlayerOfTheGods { get; set; } = false;
+    public double? SniperBonus { get; set; } = 0;
+    public double? SlayerOfTheGodsBonus { get; set; } = 0;
+    public double? MundaneBonus { get; set; } = 0;
+    public double? AccurateBonus { get; set; } = 0;
+    public double? SharpshooterBonus { get; set; } = 0;
+    public double? TunnelRatBonus { get; set; } = 0;
+    public double? OryxSlayerBonus { get; set; } = 0;
+    public double? ExplorerBonus { get; set; } = 0;
+    public double? CartographerBonus { get; set; } = 0;
+    public double? TeamPlayerBonus { get; set; } = 0;
+    public double? LeaderOfMenBonus { get; set; } = 0;
+    public double? DoerOfDeedsBonus { get; set; } = 0;
+    public double? FriendOfTheCubesBonus { get; set; } = 0;
+    public double? FirstBornBonus { get; set; } = 0;
+    public double? BootsOnTheGroundBonus { get; set; } = 0;
+    public double? ThirstyBonus { get; set; } = 0;
+    public string Content { get; set; } = "Calculate";
+
+    private void GetBonuses()
+    {
+        BaseFame2 = BaseFame;
+        TotalFame = BaseFame;
+
+        if (Sniper == true)
+        {
+            SniperBonus = BaseFame2;
+            SniperBonus = SniperBonus * 0.1;
+            TotalFame = TotalFame + SniperBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (Mundane == true)
+        {
+            MundaneBonus = BaseFame2;
+            MundaneBonus = MundaneBonus * 0.25;
+            TotalFame = TotalFame + MundaneBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (EnemyOfTheGods == true)
+        {
+            EnemyOfTheGodsBonus = BaseFame2;
+            EnemyOfTheGodsBonus = EnemyOfTheGodsBonus * 0.1;
+            TotalFame = TotalFame + EnemyOfTheGodsBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (Thirsty == true)
+        {
+            ThirstyBonus = BaseFame2;
+            ThirstyBonus = ThirstyBonus * 0.25;
+            TotalFame = TotalFame + ThirstyBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (OryxSlayer == true)
+        {
+            OryxSlayerBonus = BaseFame2;
+            OryxSlayerBonus = OryxSlayerBonus * 0.1;
+            TotalFame = TotalFame + OryxSlayerBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (SlayerOfTheGods == true)
+        {
+            SlayerOfTheGodsBonus = BaseFame2;
+            SlayerOfTheGodsBonus = SlayerOfTheGodsBonus * 0.1;
+            TotalFame = TotalFame + SlayerOfTheGodsBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (Accurate == true)
+        {
+            AccurateBonus = BaseFame2;
+            AccurateBonus = AccurateBonus * 0.1;
+            TotalFame = TotalFame + AccurateBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (Sharpshooter == true)
+        {
+            SharpshooterBonus = BaseFame2;
+            SharpshooterBonus = SharpshooterBonus * 0.1;
+            TotalFame = TotalFame + SharpshooterBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (TunnelRat == true)
+        {
+            TunnelRatBonus = BaseFame2;
+            TunnelRatBonus = TunnelRatBonus * 0.1;
+            TotalFame = TotalFame + TunnelRatBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (Explorer == true)
+        {
+            ExplorerBonus = BaseFame2;
+            ExplorerBonus = ExplorerBonus * 0.05;
+            TotalFame = TotalFame + ExplorerBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (Cartographer == true)
+        {
+            CartographerBonus = BaseFame2;
+            CartographerBonus = CartographerBonus * 0.05;
+            TotalFame = TotalFame + CartographerBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (TeamPlayer == true)
+        {
+            TeamPlayerBonus = BaseFame2;
+            TeamPlayerBonus = TeamPlayerBonus * 0.1;
+            TotalFame = TotalFame + TeamPlayerBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (LeaderOfMen == true)
+        {
+            LeaderOfMenBonus = BaseFame2;
+            LeaderOfMenBonus = LeaderOfMenBonus * 0.1;
+            TotalFame = TotalFame + LeaderOfMenBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (DoerOfDeeds == true)
+        {
+            DoerOfDeedsBonus = BaseFame2;
+            DoerOfDeedsBonus = DoerOfDeedsBonus * 0.1;
+            TotalFame = TotalFame + DoerOfDeedsBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (FriendOfTheCubes == true)
+        {
+            FriendOfTheCubesBonus = BaseFame2;
+            FriendOfTheCubesBonus = FriendOfTheCubesBonus * 0.1;
+            TotalFame = TotalFame + FriendOfTheCubesBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (FirstBorn == true)
+        {
+            FirstBornBonus = BaseFame2;
+            FirstBornBonus = FirstBornBonus * 0.1;
+            TotalFame = TotalFame + FirstBornBonus;
+            BaseFame2 = TotalFame;
+        }
+
+        if (Bonus1 > 0)
+        {
+            Bonus1Div = Bonus1 / 100;
+            Bonus1Div1 = BaseFame2;
+            Bonus1Div1 = Bonus1Div1 * Bonus1Div;
+            TotalFame = TotalFame + Bonus1Div1;
+        }
+
+        if (Bonus2 > 0)
+        {
+            Bonus2Div = Bonus2 / 100;
+            Bonus2Div1 = BaseFame2;
+            Bonus2Div1 = Bonus2Div1 * Bonus2Div;
+            TotalFame = TotalFame + Bonus2Div1;
+        }
+
+        if (Bonus3 > 0)
+        {
+            Bonus3Div = Bonus3 / 100;
+            Bonus3Div1 = BaseFame2;
+            Bonus3Div1 = Bonus3Div1 * Bonus3Div;
+            TotalFame = TotalFame + Bonus3Div1;
+        }
+
+        if (Bonus4 > 0)
+        {
+            Bonus4Div = Bonus4 / 100;
+            Bonus4Div1 = BaseFame2;
+            Bonus4Div1 = Bonus4Div1 * Bonus4Div;
+            TotalFame = TotalFame + Bonus4Div1;
+        }
+    }
+
+}
+
+
+
+<style>
+</style>

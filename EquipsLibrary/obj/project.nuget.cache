@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "bnxhPL5kjeJIlsV4uBnHKr+U3lZYh4lmqiB0iojYOmKUPT40eMokK5gm9h0irlSGBdqfHjwd8PN9ysBtNWEFzQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\kiera\\source\\repos\\RotMGClient\\EquipsLibrary\\EquipsLibrary.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kiera\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\kiera\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\kiera\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

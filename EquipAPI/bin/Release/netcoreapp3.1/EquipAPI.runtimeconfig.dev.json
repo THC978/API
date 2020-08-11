@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\kiera\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\kiera\\.nuget\\packages"
+    ]
+  }
+}

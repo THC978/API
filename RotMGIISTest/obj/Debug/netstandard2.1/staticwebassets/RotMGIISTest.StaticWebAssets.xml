@@ -1,0 +1,4 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="/" Path="C:\Users\kiera\source\repos\RotMGClient\RotMGIISTest\bin\Debug\netstandard2.1\wwwroot\" />
+  <ContentRoot BasePath="_content/Syncfusion.Blazor" Path="C:\Users\kiera\.nuget\packages\syncfusion.blazor\18.2.0.48\build\..\staticwebassets\" />
+</StaticWebAssets>

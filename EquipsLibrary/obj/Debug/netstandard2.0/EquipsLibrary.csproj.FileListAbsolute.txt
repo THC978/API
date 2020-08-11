@@ -1,0 +1,8 @@
+C:\Users\kiera\source\repos\RotMGClient\EquipsLibrary\bin\Debug\netstandard2.0\EquipsLibrary.deps.json
+C:\Users\kiera\source\repos\RotMGClient\EquipsLibrary\bin\Debug\netstandard2.0\EquipsLibrary.dll
+C:\Users\kiera\source\repos\RotMGClient\EquipsLibrary\bin\Debug\netstandard2.0\EquipsLibrary.pdb
+C:\Users\kiera\source\repos\RotMGClient\EquipsLibrary\obj\Debug\netstandard2.0\EquipsLibrary.AssemblyInfoInputs.cache
+C:\Users\kiera\source\repos\RotMGClient\EquipsLibrary\obj\Debug\netstandard2.0\EquipsLibrary.AssemblyInfo.cs
+C:\Users\kiera\source\repos\RotMGClient\EquipsLibrary\obj\Debug\netstandard2.0\EquipsLibrary.csproj.CoreCompileInputs.cache
+C:\Users\kiera\source\repos\RotMGClient\EquipsLibrary\obj\Debug\netstandard2.0\EquipsLibrary.dll
+C:\Users\kiera\source\repos\RotMGClient\EquipsLibrary\obj\Debug\netstandard2.0\EquipsLibrary.pdb
